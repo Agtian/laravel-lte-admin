@@ -28,6 +28,9 @@
                 @if (session('error'))
                     <div class="text-danger text-center">{{ session('error') }}</div>
                 @endif
+                @if (session('success'))
+                    <div class="text-success text-center">{{ session('success') }}</div>
+                @endif
                 <p class="login-box-msg">Sign in to start your session</p>
 
                 <form action="{{ route('postLogin') }}" method="post">
@@ -43,7 +46,7 @@
                     @error('email')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
-                    <div class="input-group mb-1">
+                    <div class="input-group mb-3">
                         <input type="password" class="form-control" name="password" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">

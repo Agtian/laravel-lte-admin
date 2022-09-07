@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\{AuthController, ProfileController};
+use App\Http\Controllers\Admin\{AuthController, ProfileController, UserController};
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,4 +20,9 @@ Route::get('/', function () {
 Route::get('/admin/login', [AuthController::class, 'getLogin'])->name('getLogin');
 Route::post('/admin/login', [AuthController::class, 'postLogin'])->name('postLogin');
 
-Route::get('/admin/dashboard', [ProfileController::class, 'getLogin'])->name('dashboard');
+Route::group(['middleware' => ['admin_auth']], function() {
+    Route::get('/admin/dashboard', [ProfileController::class, 'getLogin'])->name('dashboard');
+    Route::get('/admin/users', [UserController::class, 'index'])->name('users.index');
+
+    Route::get('/admin/logout', [ProfileController::class, 'logout'])->name('logout');
+});
